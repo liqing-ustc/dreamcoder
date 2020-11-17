@@ -30,7 +30,7 @@ let gen_passwd length =
     String.concat (Array.to_list (Array.init length gen))
 
 
-let supervised_task ?timeout:(timeout = 0.001) name ty examples =
+(* let supervised_task ?timeout:(timeout = 0.001) name ty examples =
   { name = name    ;
     task_type = ty ;
     log_likelihood =
@@ -59,7 +59,39 @@ let supervised_task ?timeout:(timeout = 0.001) name ty examples =
         if loop examples
           then 0.0
           else log 0.0)
-  }
+  } *)
+let noise_level = 0.1
+let supervised_task ?timeout:(timeout = 0.001) name ty examples =
+  { name = name    ;
+    task_type = ty ;
+    log_likelihood =
+      (fun p ->
+        let p = analyze_lazy_evaluation p in
+        let n_exp = List.length examples in
+        let max_err = int_of_float (noise_level *. float (List.length examples)) in
+        let rec loop err = function
+          | [] -> err
+          | (xs,y) :: e ->
+            try
+              match run_for_interval
+                      timeout
+                      (fun () -> run_lazy_analyzed_with_arguments p xs = y)
+              with
+                | Some(true) -> loop err e
+                | _ -> if err > max_err then n_exp else loop (err+1) e
+            with (* We have to be a bit careful with exceptions if the
+                  * synthesized program generated an exception, then we just
+                  * terminate w/ false but if the enumeration timeout was
+                  * triggered during program evaluation, we need to pass the
+                  * exception on
+                  *)
+              | UnknownPrimitive(n) -> raise (Failure ("Unknown primitive: "^n))
+              | EnumerationTimeout  -> raise EnumerationTimeout
+              | _                   -> n_exp
+        in
+        log ( 1. -. float (loop 0 examples) /. float (List.length examples))
+        )
+  };;
 
 let task_handler = Hashtbl.Poly.create();;
 let register_special_task name handler = Hashtbl.set task_handler name handler;;

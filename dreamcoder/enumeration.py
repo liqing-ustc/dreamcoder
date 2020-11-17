@@ -191,6 +191,7 @@ def multicoreEnumeration(g, tasks, _=None,
 
             newFrontiers, searchTimes, pc = message.value
             for t, f in newFrontiers.items():
+                f.removeLowLikelihood(low=0.8)
                 oldBest = None if len(
                     frontiers[t]) == 0 else frontiers[t].bestPosterior
                 frontiers[t] = frontiers[t].combine(f)
@@ -199,6 +200,8 @@ def multicoreEnumeration(g, tasks, _=None,
 
                 taskToNumberOfPrograms[t] += pc
 
+                if oldBest is None and newBest is None:
+                    continue
                 dt = searchTimes[t]
                 if dt is not None:
                     if bestSearchTime[t] is None:

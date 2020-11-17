@@ -169,7 +169,7 @@ def ecIterator(grammar, tasks,
                CPUs=1,
                cuda=False,
                message="",
-               outputPrefix=None,
+               outputPrefix="nscoder",
                storeTaskMetrics=False,
                rewriteTaskMetrics=True,
                auxiliaryLoss=False,
@@ -469,19 +469,19 @@ def ecIterator(grammar, tasks,
             eprint("Skipping consolidation.")
             result.grammars.append(grammar)
             
-        if outputPrefix is not None:
-            path = checkpointPath(j + 1)
-            with open(path, "wb") as handle:
-                try:
-                    dill.dump(result, handle)
-                except TypeError as e:
-                    eprint(result)
-                    assert(False)
-            eprint("Exported checkpoint to", path)
-            if useRecognitionModel:
-                ECResult.clearRecognitionModel(path)
+        # if outputPrefix is not None:
+        path = checkpointPath(j + 1)
+        with open(path, "wb") as handle:
+            try:
+                dill.dump(result, handle)
+            except TypeError as e:
+                eprint(result)
+                assert(False)
+        eprint("Exported checkpoint to", path)
+        if useRecognitionModel:
+            ECResult.clearRecognitionModel(path)
 
-            graphPrimitives(result, "%s_primitives_%d_"%(outputPrefix,j))
+        graphPrimitives(result, "%s_primitives_%d_"%(outputPrefix,j))
             
 
         yield result

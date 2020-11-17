@@ -102,6 +102,10 @@ class Frontier(object):
             if not p.isInvented: features[j] *= 0.3
         return features
             
+    def removeLowLikelihood(self, low=0.99):
+        self.entries = [
+            e for e in self.entries if e.logLikelihood >= log(low)]
+        return self
 
     def removeZeroLikelihood(self):
         self.entries = [

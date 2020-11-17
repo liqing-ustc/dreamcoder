@@ -1012,7 +1012,7 @@ class RecognitionModel(nn.Module):
         losses, descriptionLengths, realLosses, dreamLosses, realMDL, dreamMDL = [], [], [], [], [], []
         classificationLosses = []
         totalGradientSteps = 0
-        epochs = 9999999
+        epochs = 99
         for i in range(1, epochs + 1):
             if timeout and time.time() - start > timeout:
                 break
@@ -1157,7 +1157,7 @@ class RecognitionModel(nn.Module):
 class RecurrentFeatureExtractor(nn.Module):
     def __init__(self, _=None,
                  tasks=None,
-                 cuda=False,
+                 cuda=True,
                  # what are the symbols that can occur in the inputs and
                  # outputs
                  lexicon=None,

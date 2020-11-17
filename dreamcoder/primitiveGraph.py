@@ -110,7 +110,11 @@ def graphPrimitives(result, prefix, view=False):
                            "#(lambda (lambda (cons (car $1) (cons $0 empty))))":
                            "First char+char",
                            "#(lambda (#(lambda (lambda (fold $0 $1 (lambda (lambda (cons $1 $0)))))) (#(lambda (lambda (fold $1 $1 (lambda (lambda (fold $0 $0 (lambda (lambda (cdr (if (char-eq? $1 $4) $0 (cons $1 $0))))))))))) STRING (index (length (cdr $0)) $0)) $0))":
-                           "Ensure suffix"
+                           "Ensure suffix",
+                           "#(lambda (lambda (lambda (fix2 $0 $1 (lambda (lambda (lambda (if0 $0 $1 ($2 ($5 $1) (decr0 $0))))))))))":
+                           "+-",
+                           "#(#(lambda (lambda (lambda (fix2 $0 $1 (lambda (lambda (lambda (if0 $0 $1 ($2 ($5 $1) (decr0 $0)))))))))) (lambda (incr $0)))":
+                           "+"
                            
     }
 

@@ -381,7 +381,7 @@ let primitive9 = primitive "9" tint 9;;
 let primitive20 = primitive "ifty" tint 20;;
 let primitive_addition = primitive "+" (tint @> tint @> tint) (fun x y -> x + y);;
 let primitive_increment = primitive "incr" (tint @> tint) (fun x -> 1+x);;
-let primitive_decrement = primitive "decr" (tint @> tint) (fun x -> x - 1);;
+let primitive_decrement = primitive "decr" (tint @> tint) (fun x -> x-1);;
 let primitive_subtraction = primitive "-" (tint @> tint @> tint) (-);;
 let primitive_negation = primitive "negate" (tint @> tint) (fun x -> 0-x);;
 let primitive_multiplication = primitive "*" (tint @> tint @> tint) ( * );;
@@ -395,6 +395,12 @@ let primitive_false = primitive "false" tboolean false;;
 let primitive_if = primitive "if" (tboolean @> t0 @> t0 @> t0)
     ~manualLaziness:true
     (fun p x y -> if Lazy.force p then Lazy.force x else Lazy.force y);;
+
+let primitive_decrement_tozero = primitive "decr0" (tint @> tint) (fun x -> if x = 0 then 0 else x-1);;
+let primitive_subtraction_tozero = primitive "-0" (tint @> tint @> tint) (fun x y -> if x < y then 0 else x - y);;
+let primitive_if_nonzero = primitive "if0" (t0 @> t0 @> t0 @> t0)
+    ~manualLaziness:true
+    (fun p x y -> if (Lazy.force p) = 0 then Lazy.force x else Lazy.force y);;
 
 let primitive_is_square = primitive "is-square" (tint @> tboolean)
     (fun x ->
@@ -477,6 +483,7 @@ let primitive_and = primitive "and" (tboolean @> tboolean @> tboolean) (fun x y 
 let primitive_nand = primitive "nand" (tboolean @> tboolean @> tboolean) (fun x y -> not (x && y));;
 let primitive_or = primitive "or" (tboolean @> tboolean @> tboolean) (fun x y -> x || y);;
 let primitive_greater_than = primitive "gt?" (tint @> tint @> tboolean) (fun (x: int) (y: int) -> x > y);;
+let primitive_positive = primitive "positive?" (tint @> tboolean) (fun (x: int) -> x > 0);;
 
 ignore(primitive "take-word" (tcharacter @> tstring @> tstring) (fun c s ->
     List.take_while s ~f:(fun c' -> not (c = c'))));;
@@ -685,7 +692,7 @@ let _ = primitive "logo_forLoopM"
 (*let logo_CHEAT3  = primitive "logo_CHEAT3"             (ttvar @> turtle) LogoLib.LogoInterpreter.logo_CHEAT3*)
 (*let logo_CHEAT4  = primitive "logo_CHEAT4"             (ttvar @> turtle) LogoLib.LogoInterpreter.logo_CHEAT4*)
 
-let default_recursion_limit = 20;;
+(* let default_recursion_limit = 20;; *)
 
 let rec unfold x p h n =
   if p x then [] else h x :: unfold (n x) p h n
