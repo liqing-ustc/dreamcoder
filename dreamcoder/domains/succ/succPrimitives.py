@@ -27,7 +27,7 @@ class RecursionDepthExceeded(Exception):
 
 def _fix(argument):
     def inner(body):
-        recursion_limit = [50]
+        recursion_limit = [200]
 
         def fix(x):
             def r(z):
