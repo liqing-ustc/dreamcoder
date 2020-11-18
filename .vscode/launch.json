@@ -8,7 +8,7 @@
             "name": "Domain: HINT",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/succ.py",
+            "program": "${workspaceFolder}/bin/hint.py",
             "args" : ["-RS=50", "--contextual"],
             "console": "integratedTerminal",
         },

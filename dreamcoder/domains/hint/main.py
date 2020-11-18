@@ -10,9 +10,9 @@ from dreamcoder.utilities import eprint, flatten, testTrainSplit
 from dreamcoder.grammar import Grammar
 from dreamcoder.task import Task
 from dreamcoder.type import Context, arrow, tbool, tlist, tint, t0, UnificationFailure
-from dreamcoder.domains.succ.succPrimitives import McCarthyPrimitives
+from dreamcoder.domains.hint.hintPrimitives import McCarthyPrimitives
 from dreamcoder.recognition import RecurrentFeatureExtractor
-from dreamcoder.domains.succ.makeTasks import make_list_bootstrap_tasks
+from dreamcoder.domains.hint.makeTasks import make_list_bootstrap_tasks
 
 def list_features(examples):
     if any(isinstance(i, int) for (i,), _ in examples):
