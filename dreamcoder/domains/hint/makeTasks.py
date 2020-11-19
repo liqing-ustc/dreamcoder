@@ -51,7 +51,7 @@ def make_list_bootstrap_tasks():
     ]
 
     # Add counting task
-    for i in range(9):
+    for i in range(10):
         operatorBootstrap.append( Task(str(i), arrow(tint),
              generate_noise(n_sample*noise, arity=0) + [((), i)] * n_sample*(1-noise)))
 
