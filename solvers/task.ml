@@ -60,7 +60,7 @@ let gen_passwd length =
           then 0.0
           else log 0.0)
   } *)
-let noise_level = 0.1
+let noise_level = 0.9
 let supervised_task ?timeout:(timeout = 0.001) name ty examples =
   { name = name    ;
     task_type = ty ;
