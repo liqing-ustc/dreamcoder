@@ -193,44 +193,25 @@ def __unfold(p, f, n, x, recursion_limit=50):
 class RecursionDepthExceeded(Exception):
     pass
 
+from dreamcoder.domains.hint.hintPrimitives import _fix, _fix2, curry, primitiveRecursion1, primitiveRecursion2
 
-def _fix(argument):
-    def inner(body):
-        recursion_limit = [20]
+# def curry(f): return lambda x: lambda y: f((x, y))
 
-        def fix(x):
-            def r(z):
-                recursion_limit[0] -= 1
-                if recursion_limit[0] <= 0:
-                    raise RecursionDepthExceeded()
-                else:
-                    return fix(z)
+# def _fix2(a1):
+#     return lambda a2: lambda body: \
+#         _fix((a1, a2))(lambda r: lambda n_l: body(curry(r))(n_l[0])(n_l[1]))
 
-            return body(r)(x)
-        return fix(argument)
+# primitiveRecursion1 = Primitive("fix1",
+#                                 arrow(t0,
+#                                       arrow(arrow(t0, t1), t0, t1),
+#                                       t1),
+#                                 _fix)
 
-    return inner
-
-
-def curry(f): return lambda x: lambda y: f((x, y))
-
-
-def _fix2(a1):
-    return lambda a2: lambda body: \
-        _fix((a1, a2))(lambda r: lambda n_l: body(curry(r))(n_l[0])(n_l[1]))
-
-
-primitiveRecursion1 = Primitive("fix1",
-                                arrow(t0,
-                                      arrow(arrow(t0, t1), t0, t1),
-                                      t1),
-                                _fix)
-
-primitiveRecursion2 = Primitive("fix2",
-                                arrow(t0, t1,
-                                      arrow(arrow(t0, t1, t2), t0, t1, t2),
-                                      t2),
-                                _fix2)
+# primitiveRecursion2 = Primitive("fix2",
+#                                 arrow(t0, t1,
+#                                       arrow(arrow(t0, t1, t2), t0, t1, t2),
+#                                       t2),
+#                                 _fix2)
 
 
 def _match(l):
