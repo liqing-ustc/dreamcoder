@@ -37,7 +37,7 @@ def make_list_bootstrap_tasks():
     def _div(x, y): return x // y
 
     n_sample = 20
-    noise = 0.9
+    noise = 0.8
 
     operatorBootstrap = [
         Task ("add", arrow(tint, tint, tint),
@@ -55,9 +55,13 @@ def make_list_bootstrap_tasks():
     ]
 
     # Add counting task
+    from collections import Counter
     for i in range(10):
-        operatorBootstrap.append( Task(str(i), arrow(tint),
-             generate_noise(n_sample*noise, arity=0) + [((), i)] * int(n_sample- n_sample * noise)))
+        task = Task(str(i), arrow(tint),
+             generate_noise(n_sample*noise, arity=0) + [((), i)] * int(n_sample- n_sample * noise))
+        ys = [y for _, y in task.examples]
+        print(i, Counter(ys).most_common(3))
+        operatorBootstrap.append(task)
 
     return operatorBootstrap
 

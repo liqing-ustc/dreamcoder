@@ -191,7 +191,8 @@ def multicoreEnumeration(g, tasks, _=None,
 
             newFrontiers, searchTimes, pc = message.value
             for t, f in newFrontiers.items():
-                f.removeLowLikelihood(low=0.1)
+                f.removeLowLikelihood(low=0.05)
+                f = f.temperature(T=1000)
                 oldBest = None if len(
                     frontiers[t]) == 0 else frontiers[t].bestPosterior
                 frontiers[t] = frontiers[t].combine(f)
