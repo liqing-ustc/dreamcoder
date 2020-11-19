@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/bin/hint.py",
-            "args" : ["-RS=50", "--contextual"],
+            "args" : ["-RS=50", "-t=20", "-i=5"],
             "console": "integratedTerminal",
         },
         {
