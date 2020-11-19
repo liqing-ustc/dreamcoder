@@ -10,6 +10,8 @@ class FrontierEntry(object):
             logPrior=None,
             logLikelihood=None,
             logPosterior=None):
+        temperature = 1000
+        logPrior /= temperature # TODO: a better way to set temperature 
         self.logPosterior = logPrior + logLikelihood if logPosterior is None else logPosterior
         self.program = program
         self.logPrior = logPrior
