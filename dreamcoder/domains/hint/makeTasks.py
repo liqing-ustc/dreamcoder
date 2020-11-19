@@ -20,10 +20,14 @@ def make_list_bootstrap_tasks():
         return [randint(minValue, maxValue) for _ in range(int(len))]
 
     def generate_noise(n, arity=2):
+        n = int(n)
         xs = []
         for _ in range(arity):
             xs.append(randomList(len=n))
-        return list(zip(zip(*xs), randomList(len=n)))
+        y = randomList(len=n)
+        if arity == 0:
+            return [((), s) for s in y]
+        return list(zip(zip(*xs), y))
 
     # Functions to be learnt
     def _add(x, y): return x + y
@@ -33,7 +37,7 @@ def make_list_bootstrap_tasks():
     def _div(x, y): return x // y
 
     n_sample = 20
-    noise = 0
+    noise = 0.9
 
     operatorBootstrap = [
         Task ("add", arrow(tint, tint, tint),
@@ -53,7 +57,7 @@ def make_list_bootstrap_tasks():
     # Add counting task
     for i in range(10):
         operatorBootstrap.append( Task(str(i), arrow(tint),
-             generate_noise(n_sample*noise, arity=0) + [((), i)] * n_sample*(1-noise)))
+             generate_noise(n_sample*noise, arity=0) + [((), i)] * int(n_sample- n_sample * noise)))
 
     return operatorBootstrap
 

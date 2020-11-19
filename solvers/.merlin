@@ -98,5 +98,5 @@ S /home/qing/.opam/4.06.1+flambda/lib/zmq
 S .
 S geomLib
 S logoLib
-FLG -ppx '/home/qing/Desktop/Closed-Loop-Learning/dreamcoder/solvers/_build/default/.ppx/jbuild/ppx_jane/ppx.exe --as-ppx'
+FLG -ppx '/home/qing/Desktop/Closed-Loop-Learning/CLL-NeSy/semantics/dreamcoder/solvers/_build/default/.ppx/jbuild/ppx_jane/ppx.exe --as-ppx'
 FLG -w -40

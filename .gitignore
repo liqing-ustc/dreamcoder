@@ -20,7 +20,6 @@ compressionMessages/
 container.img
 launchers/
 figures/
-data/*
 !data/puddleworld/
 data/taskRankGraphs
 message
