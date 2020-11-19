@@ -22,9 +22,6 @@ def _add(x, y): return x + y
 
 def _minus0(x, y): return max(0, x - y)
 
-class RecursionDepthExceeded(Exception):
-    pass
-
 def _fix(argument):
     def inner(body):
         recursion_limit = [200]
@@ -33,7 +30,7 @@ def _fix(argument):
             def r(z):
                 recursion_limit[0] -= 1
                 if recursion_limit[0] <= 0:
-                    raise RecursionDepthExceeded()
+                    raise RecursionError
                 else:
                     return fix(z)
 
