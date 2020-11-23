@@ -63,6 +63,7 @@ def make_list_bootstrap_tasks():
     #     print(i, Counter(ys).most_common(3))
     #     operatorBootstrap.append(task)
 
+    import json
     operatorBootstrap = []
     tasks = json.load(open('../../outputs/tasks.json'))
     for i, t in enumerate(tasks):
