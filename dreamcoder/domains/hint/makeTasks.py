@@ -39,29 +39,37 @@ def make_list_bootstrap_tasks():
     n_sample = 20
     noise = 0.8
 
-    operatorBootstrap = [
-        Task ("add", arrow(tint, tint, tint),
-             generate_noise(n_sample*noise) + 
-             [((a, b), _add(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
-        Task ("minus", arrow(tint, tint, tint),
-             generate_noise(n_sample*noise) + 
-             [((a, b), _minus(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
-        Task ("multiply", arrow(tint, tint, tint),
-             generate_noise(n_sample*noise) + 
-             [((a, b), _mul(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
-        Task ("divide", arrow(tint, tint, tint),
-             generate_noise(n_sample*noise) + 
-             [((a, b), _div(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(minValue=1, len=n_sample*(1-noise)))]),
-    ]
+    # operatorBootstrap = [
+    #     Task ("add", arrow(tint, tint, tint),
+    #          generate_noise(n_sample*noise) + 
+    #          [((a, b), _add(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
+    #     Task ("minus", arrow(tint, tint, tint),
+    #          generate_noise(n_sample*noise) + 
+    #          [((a, b), _minus(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
+    #     Task ("multiply", arrow(tint, tint, tint),
+    #          generate_noise(n_sample*noise) + 
+    #          [((a, b), _mul(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
+    #     Task ("divide", arrow(tint, tint, tint),
+    #          generate_noise(n_sample*noise) + 
+    #          [((a, b), _div(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(minValue=1, len=n_sample*(1-noise)))]),
+    # ]
 
-    # Add counting task
-    from collections import Counter
-    for i in range(10):
-        task = Task(str(i), arrow(tint),
-             generate_noise(n_sample*noise, arity=0) + [((), i)] * int(n_sample- n_sample * noise))
-        ys = [y for _, y in task.examples]
-        print(i, Counter(ys).most_common(3))
+    # # Add counting task
+    # from collections import Counter
+    # for i in range(10):
+    #     task = Task(str(i), arrow(tint),
+    #          generate_noise(n_sample*noise, arity=0) + [((), i)] * int(n_sample- n_sample * noise))
+    #     ys = [y for _, y in task.examples]
+    #     print(i, Counter(ys).most_common(3))
+    #     operatorBootstrap.append(task)
+
+    operatorBootstrap = []
+    tasks = json.load(open('../../outputs/tasks.json'))
+    for i, t in enumerate(tasks):
+        task = Task(str(i), arrow(tint, tint, tint), t)
         operatorBootstrap.append(task)
+    task = Task(str(len(tasks)), arrow(tint, tint, tint), [x for t in tasks for x in t])
+    operatorBootstrap.append(task)
 
     return operatorBootstrap
 
