@@ -4,6 +4,7 @@ from dreamcoder.type import tlist, tint, tbool, arrow, t0, t1, t2
 
 import math
 from functools import reduce
+from objproxies import LazyProxy
 
 def _if(c): return lambda t: lambda f: t if c else f
 def _if0(a): return lambda b: lambda c: b if a == 0 else c
@@ -34,19 +35,26 @@ def _fix(argument):
                 else:
                     return fix(z)
 
-            return body(r)(x)
+            return LazyProxy(lambda: body(r)(x))
+            # return body(r)(x)
         return fix(argument)
 
     return inner
 
 
-def curry(f): return lambda x: lambda y: f((x, y))
+# def curry(f): return lambda x: lambda y: f((x, y))
+def curry(f): return lambda x: lambda y: LazyProxy(lambda: f((x, y)))
 
 
 def _fix2(a1):
     return lambda a2: lambda body: \
         _fix((a1, a2))(lambda r: lambda n_l: body(curry(r))(n_l[0])(n_l[1]))
 
+# plus = lambda f: lambda x: lambda y: _if0(x)(y)(f(_decr0(x))(_incr(y)))
+# plus = lambda f: lambda x: lambda y: _if0(x)(y)(LazyProxy(lambda: f(_decr0(x))(_incr(y))))
+# plus = lambda f: lambda x: lambda y: y if x == 0 else f(_decr0(x))(_incr(y))
+# res = _fix2(2)(3)(plus)
+# print(res)
 
 primitiveRecursion1 = Primitive("fix1",
                                 arrow(t0,
