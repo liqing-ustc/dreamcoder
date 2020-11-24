@@ -705,7 +705,7 @@ let primitive_fold = primitive "fold" (tlist t0 @> t1 @> (t0 @> t1 @> t1) @> t1)
     (fun l x0 f -> List.fold_right ~f:f ~init:x0 l);;
 
 
-let default_recursion_limit = ref 200;;
+let default_recursion_limit = ref 50;;
 let set_recursion_limit l = default_recursion_limit := l;;
 exception RecursionDepthExceeded of int;;
     

@@ -224,7 +224,7 @@ class Application(Program):
                              f.isApplication and \
                              f.f.isApplication and \
                              f.f.f.isPrimitive and \
-                             f.f.f.name == "if"
+                             (f.f.f.name == "if" or f.f.f.name =="if0")
         if self.isConditional:
             self.falseBranch = x
             self.trueBranch = f.x
@@ -297,7 +297,7 @@ class Application(Program):
                                  f.isApplication and \
                                  f.f.isApplication and \
                                  f.f.f.isPrimitive and \
-                                 f.f.f.name == "if"
+                                 (f.f.f.name == "if" or f.f.f.name =="if0")
             if self.isConditional:
                 self.falseBranch = x
                 self.trueBranch = f.x
@@ -324,7 +324,9 @@ class Application(Program):
 
     def evaluate(self, environment):
         if self.isConditional:
-            if self.branch.evaluate(environment):
+            condition = self.branch.evaluate(environment)
+            condition = condition == 0 if isinstance(condition, int) else condition
+            if condition:
                 return self.trueBranch.evaluate(environment)
             else:
                 return self.falseBranch.evaluate(environment)

@@ -25,7 +25,7 @@ def _minus0(x, y): return max(0, x - y)
 
 def _fix(argument):
     def inner(body):
-        recursion_limit = [200]
+        recursion_limit = [50]
 
         def fix(x):
             def r(z):
@@ -34,27 +34,19 @@ def _fix(argument):
                     raise RecursionError
                 else:
                     return fix(z)
-
-            return LazyProxy(lambda: body(r)(x))
-            # return body(r)(x)
+            return body(r)(x)
         return fix(argument)
 
     return inner
 
 
-# def curry(f): return lambda x: lambda y: f((x, y))
-def curry(f): return lambda x: lambda y: LazyProxy(lambda: f((x, y)))
+def curry(f): return lambda x: lambda y: f((x, y))
 
 
 def _fix2(a1):
     return lambda a2: lambda body: \
         _fix((a1, a2))(lambda r: lambda n_l: body(curry(r))(n_l[0])(n_l[1]))
 
-# plus = lambda f: lambda x: lambda y: _if0(x)(y)(f(_decr0(x))(_incr(y)))
-# plus = lambda f: lambda x: lambda y: _if0(x)(y)(LazyProxy(lambda: f(_decr0(x))(_incr(y))))
-# plus = lambda f: lambda x: lambda y: y if x == 0 else f(_decr0(x))(_incr(y))
-# res = _fix2(2)(3)(plus)
-# print(res)
 
 primitiveRecursion1 = Primitive("fix1",
                                 arrow(t0,
