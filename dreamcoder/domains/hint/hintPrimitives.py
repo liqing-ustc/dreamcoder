@@ -25,7 +25,7 @@ def _minus0(x, y): return max(0, x - y)
 
 def _fix(argument):
     def inner(body):
-        recursion_limit = [50]
+        recursion_limit = [200]
 
         def fix(x):
             def r(z):
