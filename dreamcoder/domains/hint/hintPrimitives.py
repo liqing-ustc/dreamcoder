@@ -1,4 +1,4 @@
-from dreamcoder.program import Primitive, Program
+from dreamcoder.program import Primitive, Program, Invented
 from dreamcoder.grammar import Grammar
 from dreamcoder.type import tlist, tint, tbool, arrow, t0, t1, t2
 
@@ -62,7 +62,7 @@ primitiveRecursion2 = Primitive("fix2",
 
 def McCarthyPrimitives():
     "These are < primitives provided by 1959 lisp as introduced by McCarthy"
-    return [
+    primitives = [
         Primitive("0", tint, 0),
         Primitive("incr", arrow(tint, tint), _incr),
         Primitive("decr0", arrow(tint, tint), _decr0),
@@ -76,6 +76,10 @@ def McCarthyPrimitives():
         # Primitive("+", arrow(tint, tint, tint), _add),
         # Primitive("-0", arrow(tint, tint, tint), _minus0),
     ]
+    plus = Program.parse("(lambda (lambda (fix2 $1 $0 (lambda (lambda (lambda (if0 $0 $1 (incr ($2 $1 (decr0 $0))))))))))")
+    plus = Invented(plus)
+    primitives.append(plus)
+    return primitives
 
 
 if __name__ == "__main__":
