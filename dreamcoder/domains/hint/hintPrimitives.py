@@ -76,9 +76,9 @@ def McCarthyPrimitives():
         # Primitive("+", arrow(tint, tint, tint), _add),
         # Primitive("-0", arrow(tint, tint, tint), _minus0),
     ]
-    plus = Program.parse("(lambda (lambda (fix2 $1 $0 (lambda (lambda (lambda (if0 $0 $1 (incr ($2 $1 (decr0 $0))))))))))")
-    plus = Invented(plus)
-    primitives.append(plus)
+    # plus = Program.parse("(lambda (lambda (fix2 $1 $0 (lambda (lambda (lambda (if0 $0 $1 (incr ($2 $1 (decr0 $0))))))))))")
+    # plus = Invented(plus)
+    # primitives.append(plus)
     return primitives
 
 
