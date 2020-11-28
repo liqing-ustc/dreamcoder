@@ -37,22 +37,23 @@ def make_list_bootstrap_tasks():
     def _div(x, y): return x // y
 
     n_sample = 20
-    noise = 0.8
+    noise = 0.
+    operatorBootstrap = []
 
-    # operatorBootstrap = [
-    #     Task ("add", arrow(tint, tint, tint),
-    #          generate_noise(n_sample*noise) + 
-    #          [((a, b), _add(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
-    #     Task ("minus", arrow(tint, tint, tint),
-    #          generate_noise(n_sample*noise) + 
-    #          [((a, b), _minus(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
-    #     Task ("multiply", arrow(tint, tint, tint),
-    #          generate_noise(n_sample*noise) + 
-    #          [((a, b), _mul(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
-    #     Task ("divide", arrow(tint, tint, tint),
-    #          generate_noise(n_sample*noise) + 
-    #          [((a, b), _div(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(minValue=1, len=n_sample*(1-noise)))]),
-    # ]
+    operatorBootstrap = [
+        # Task ("add", arrow(tint, tint, tint),
+        #      generate_noise(n_sample*noise) + 
+        #      [((a, b), _add(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
+        # Task ("minus", arrow(tint, tint, tint),
+        #      generate_noise(n_sample*noise) + 
+        #      [((a, b), _minus(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
+        # Task ("multiply", arrow(tint, tint, tint),
+        #      generate_noise(n_sample*noise) + 
+        #      [((a, b), _mul(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
+        Task ("divide", arrow(tint, tint, tint),
+             generate_noise(n_sample*noise) + 
+             [((a, b), _div(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(minValue=1, len=n_sample*(1-noise)))]),
+    ]
 
     # # Add counting task
     # from collections import Counter
@@ -64,24 +65,12 @@ def make_list_bootstrap_tasks():
     #     operatorBootstrap.append(task)
 
     import json
-    operatorBootstrap = []
     # tasks = json.load(open('../../outputs/tasks.json'))
     # for i, t in enumerate(tasks):
     #     task = Task(str(i), arrow(tint, tint, tint), t)
     #     operatorBootstrap.append(task)
     # task = Task(str(len(tasks)), arrow(tint, tint, tint), [x for t in tasks for x in t])
     # operatorBootstrap.append(task)
-
-    examples = {((1, 8), 8): 11, ((2, 5), 10): 9, ((9, 8), 72): 6, ((1, 4), 4): 6, ((1, 3), 3): 5, ((3, 4), 9): 4, ((2, 6), 12): 4, ((6, 8), 48): 4, ((9, 6), 54): 4, ((5, 6), 30): 4, ((2, 8), 
-16): 4, ((1, 2), 2): 4, ((8, 9), 72): 4, ((1, 9), 9): 4, ((6, 9), 54): 4, ((6, 4), 9): 4, ((7, 4), 28): 3, ((0, 2), 2): 3, ((6, 7), 42): 3, ((5, 5), 10): 3, ((6, 6), 36): 3, ((1, 5), 5): 3, ((7, 6), 42): 3, ((1, 7), 7): 3, ((2, 7),
- 14): 3, ((8, 3), 24): 3, ((9, 7), 63): 3, ((4, 6), 24): 3, ((9, 3), 27): 3, ((7, 9), 63): 2, ((5, 3), 15): 2, ((3, 8), 24): 2, ((2, 3), 6): 2, ((9, 4), 36): 2, ((1, 1), 1): 2, ((0, 5), 5): 2, ((0, 6), 6): 2, ((9, 2), 18): 2, ((4, 
-9), 36): 2, ((5, 8), 40): 2, ((9, 0), 27): 2, ((8, 0), 0): 2, ((7, 8), 56): 2, ((7, 7), 49): 2, ((6, 5), 30): 2, ((7, 5), 10): 1, ((4, 7), 49): 1, ((0, 8), 8): 1, ((8, 8), 40): 1, ((0, 3), 3): 1, ((6, 1), 42): 1, ((3, 2), 7): 1, ((
-2, 1), 2): 1, ((2, 9), 18): 1, ((5, 2), 9): 1, ((6, 3), 18): 1, ((4, 4), 8): 1, ((5, 7), 35): 1, ((8, 7), 56): 1, ((4, 8), 32): 1, ((7, 3), 21): 1, ((3, 6), 18): 1, ((9, 9), 27): 1, ((2, 4), 8): 1, ((4, 5), 25): 1, ((8, 4), 20): 1,
- ((3, 3), 6): 1, ((5, 4), 20): 1, ((8, 6), 48): 1, ((4, 2), 16): 1, ((0, 4), 6): 1, ((4, 3), 12): 1, ((5, 9), 45): 1, ((8, 2), 45): 1, ((3, 9), 27): 1, ((8, 5), 40): 1, ((9, 5), 45): 1}
-    examples = [[e]*count for e, count in examples.items()]
-    examples = [y for x in examples for y in x]
-    task = Task("10", arrow(tint, tint, tint), examples)
-    operatorBootstrap.append(task)
 
     # examples = {((7, 0), 7): 7, ((5, 6), 30): 6, ((5, 7), 35): 6, ((8, 2), 16): 6, ((1, 0), 1): 5, ((5, 8), 40): 5, ((6, 3), 18): 5, ((4, 0), 4): 3, ((5, 0), 5): 3, ((5, 5), 25): 3, ((3, 0), 3): 3, ((9, 0), 9): 3, ((5, 9), 45): 2, ((4, 1), 8): 2, ((1, 1), 5): 2, ((4, 3), 16): 2, ((9, 3), 27): 1, ((3, 5), 25): 1, ((0, 0), 0): 1, ((8, 0), 8): 1, ((7, 4), 28): 1, ((7, 8), 56): 1, ((6, 0), 6): 1, ((3, 4), 12): 1, ((6, 1), 10): 1, ((3, 7), 21): 1, ((9, 8), 72): 1, ((9, 9), 45): 1, ((9, 7), 63): 1, ((9, 4), 36): 1, ((8, 9), 9): 1, ((1, 8), 72): 1, ((2, 3), 4): 1}
     # examples = [[e]*count for e, count in examples.items()]
