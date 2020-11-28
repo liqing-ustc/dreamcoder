@@ -37,6 +37,7 @@ def make_list_bootstrap_tasks():
     def _mul(x, y): return x * y
     # def _div(x, y): return x // y
     def _div(x, y): return math.ceil(x / y)
+    _fac = lambda x: math.factorial(x) if x <=20 else None
 
     n_sample = 20
     noise = 0.
@@ -52,9 +53,12 @@ def make_list_bootstrap_tasks():
         # Task ("multiply", arrow(tint, tint, tint),
         #      generate_noise(n_sample*noise) + 
         #      [((a, b), _mul(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
-        Task ("divide", arrow(tint, tint, tint),
-             generate_noise(n_sample*noise) + 
-             [((a, b), _div(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(minValue=1, len=n_sample*(1-noise)))]),
+        # Task ("divide", arrow(tint, tint, tint),
+        #      generate_noise(n_sample*noise) + 
+        #      [((a, b), _div(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(minValue=1, len=n_sample*(1-noise)))]),
+        Task ("factorial", arrow(tint, tint),
+             generate_noise(n_sample*noise, arity=1) + 
+             [((a,), _fac(a)) for a in randomList(len=n_sample*(1-noise))]),
     ]
 
     # # Add counting task
