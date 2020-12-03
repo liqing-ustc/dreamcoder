@@ -74,7 +74,7 @@ def McCarthyPrimitives():
         # Primitive("gt?", arrow(tint, tint, tbool), _gt),
         # Primitive("positive?", arrow(tint, tbool), _positive),
         # Primitive("+", arrow(tint, tint, tint), _add),
-        # Primitive("-0", arrow(tint, tint, tint), _minus0),
+        Primitive("-0", arrow(tint, tint, tint), _minus0),
     ]
     return primitives
 

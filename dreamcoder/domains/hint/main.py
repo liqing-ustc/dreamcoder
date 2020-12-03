@@ -221,9 +221,9 @@ def main(args):
     # minus = Program.parse("(lambda (lambda (fix2 $1 $0 (lambda (lambda (lambda (if0 $0 $1 ($2 (decr0 $1) (decr0 $0)))))))))")
     # minus = Invented(minus)
     # primitives.append(minus)
-    times = Program.parse("(lambda (lambda (fix2 $1 $0 (lambda (lambda (lambda (if0 $0 0 (#(lambda (lambda (fix2 $1 $0 (lambda (lambda (lambda (if0 $0 $1 (incr ($2 $1 (decr0 $0)))))))))) $1 ($2 (decr0 $0) $1)))))))))")
-    times = Invented(times)
-    primitives.append(times)
+    # times = Program.parse("(lambda (lambda (fix2 $1 $0 (lambda (lambda (lambda (if0 $0 0 (#(lambda (lambda (fix2 $1 $0 (lambda (lambda (lambda (if0 $0 $1 (incr ($2 $1 (decr0 $0)))))))))) $1 ($2 (decr0 $0) $1)))))))))")
+    # times = Invented(times)
+    # primitives.append(times)
     baseGrammar = Grammar.uniform(primitives)
 
     extractor = {
