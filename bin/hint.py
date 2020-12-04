@@ -13,7 +13,7 @@ if __name__ == '__main__':
         enumerationTimeout=200, activation='tanh', iterations=1, recognitionTimeout=3600,
         a=3, maximumFrontier=5, topK=2, pseudoCounts=30.0,
         helmholtzRatio=0.5, structurePenalty=1.,
-        CPUs=numberOfCPUs(),
+        CPUs=min(8, numberOfCPUs()),
         extras=list_options)
     args['noConsolidation'] = True
     args['contextual'] = True
