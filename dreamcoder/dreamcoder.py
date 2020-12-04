@@ -127,7 +127,6 @@ ECResult.abbreviationToParameter = {
 
 def explorationCompression(*arguments, **keywords):
     for r in ecIterator(*arguments, **keywords):
-        print(r)
         pass
     return r
 

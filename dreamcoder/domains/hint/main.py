@@ -268,4 +268,5 @@ def main(args):
         test = []
 
     result = explorationCompression(baseGrammar, train, testingTasks=test, **args)
-    
+    print(result.grammars)
+    print([x.bestPosterior for x in result.taskSolutions.values()])
