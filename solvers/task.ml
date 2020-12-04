@@ -358,8 +358,7 @@ let enumerate_for_tasks (g: contextual_grammar) ?verbose:(verbose = true)
     Array.init nt ~f:(fun _ -> 
         Heap.create
           ~cmp:(fun h1 h2 ->
-              Float.compare (h1.hit_likelihood) (h2.hit_likelihood))
-              (* Float.compare (h1.hit_likelihood+.h1.hit_prior) (h2.hit_likelihood+.h2.hit_prior)) *)
+              Float.compare (h1.hit_likelihood+.h1.hit_prior) (h2.hit_likelihood+.h2.hit_prior))
           ()) in
   
   let lower_bound = ref lowerBound in
