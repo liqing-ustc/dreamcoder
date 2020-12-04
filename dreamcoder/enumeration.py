@@ -45,7 +45,9 @@ def multicoreEnumeration(g, tasks, _=None,
 
     for t, g in task2grammar.items():
         if isinstance(g, ContextualGrammar):
-            productions = [(0. if p.name.startswith('fix') else (l - 100.), p) for l, t, p in g.noParent.productions]
+            from dreamcoder.program import Primitive
+            productions = [(0. if isinstance(p, Primitive) and p.name.startswith('fix') else (l - 100.), p) 
+                        for l, t, p in g.noParent.productions]
             g.noParent = Grammar.fromProductions(productions, g.noParent.logVariable-100.)
         # print('='*60)
         # print(t)
