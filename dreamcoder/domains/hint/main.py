@@ -225,6 +225,7 @@ def main(args):
     # times = Invented(times)
     # primitives.append(times)
     baseGrammar = Grammar.uniform(primitives)
+    baseGrammar = Grammar(0.0, [(5.0 if p.name.startswith('fix') else 0.0, p.infer(), p) for p in primitives])
 
     extractor = {
         "learned": LearnedFeatureExtractor,
@@ -267,6 +268,9 @@ def main(args):
         train = tasks
         test = []
 
+    print(baseGrammar)
     result = explorationCompression(baseGrammar, train, testingTasks=test, **args)
-    print(result.grammars)
+    for g in result.grammars:
+        print('='*60)
+        print(g)
     print([x.bestPosterior for x in result.taskSolutions.values()])
