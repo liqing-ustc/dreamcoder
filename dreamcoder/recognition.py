@@ -1012,7 +1012,7 @@ class RecognitionModel(nn.Module):
         losses, descriptionLengths, realLosses, dreamLosses, realMDL, dreamMDL = [], [], [], [], [], []
         classificationLosses = []
         totalGradientSteps = 0
-        epochs = 99
+        epochs = 299
         for i in range(1, epochs + 1):
             if timeout and time.time() - start > timeout:
                 break
