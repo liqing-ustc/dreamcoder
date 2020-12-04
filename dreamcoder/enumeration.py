@@ -43,6 +43,11 @@ def multicoreEnumeration(g, tasks, _=None,
         g = {t: g for t in tasks}
     task2grammar = g
 
+    for t, g in task2grammar.items():
+        print('='*60)
+        print(t)
+        print(g)
+
     # If we are not evaluating on held out testing tasks:
     # Bin the tasks by request type and grammar
     # If these are the same then we can enumerate for multiple tasks simultaneously
@@ -82,7 +87,7 @@ def multicoreEnumeration(g, tasks, _=None,
     def budgetIncrement(lb):
         if True:
             # return 1.5
-            return 2
+            return 3
         # Very heuristic - not sure what to do here
         if lb < 24.:
             return 1.
