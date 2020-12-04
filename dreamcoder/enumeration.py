@@ -47,9 +47,9 @@ def multicoreEnumeration(g, tasks, _=None,
         if isinstance(g, ContextualGrammar):
             productions = [(0. if p.name.startswith('fix') else (l - 100.), p) for l, t, p in g.noParent.productions]
             g.noParent = Grammar.fromProductions(productions, g.noParent.logVariable-100.)
-        print('='*60)
-        print(t)
-        print(g)
+        # print('='*60)
+        # print(t)
+        # print(g)
 
     # If we are not evaluating on held out testing tasks:
     # Bin the tasks by request type and grammar
