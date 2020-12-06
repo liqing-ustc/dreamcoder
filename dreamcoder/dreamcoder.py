@@ -386,7 +386,7 @@ def ecIterator(grammar, tasks,
                                                                     evaluationTimeout=evaluationTimeout,
                                                                     special=featureExtractor.special)
             else:
-                print("Reusing dreams from previous iteration.")
+                eprint("Reusing dreams from previous iteration.")
         else:
             helmholtzFrontiers = lambda: []
 
