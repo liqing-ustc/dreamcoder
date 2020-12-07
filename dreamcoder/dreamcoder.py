@@ -132,6 +132,7 @@ def explorationCompression(*arguments, **keywords):
 
 
 def ecIterator(grammar, tasks,
+               allFrontiers=None, # frontiers from previous training
                _=None,
                useDSL=True,
                noConsolidation=False,
@@ -213,6 +214,7 @@ def ecIterator(grammar, tasks,
         k: v for k,
         v in locals().items() if k not in {
             "tasks",
+            "allFrontiers",
             "use_map_search_times",
             "seed",
             "activation",
@@ -297,9 +299,8 @@ def ecIterator(grammar, tasks,
                               t: Frontier([],
                                           task=t) for t in tasks},
                           recognitionModel=None, numTestingTasks=numTestingTasks,
-                          allFrontiers={
-                              t: Frontier([],
-                                          task=t) for t in tasks})
+                          allFrontiers=allFrontiers if allFrontiers is not None else
+                                     {t: Frontier([], task=t) for t in tasks})
 
 
     # Set up the task batcher.
