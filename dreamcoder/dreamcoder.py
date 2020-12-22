@@ -133,6 +133,7 @@ def explorationCompression(*arguments, **keywords):
 
 def ecIterator(grammar, tasks,
                allFrontiers=None, # frontiers from previous training
+               helmholtzFrontiers=None, 
                _=None,
                useDSL=True,
                noConsolidation=False,
@@ -215,6 +216,7 @@ def ecIterator(grammar, tasks,
         v in locals().items() if k not in {
             "tasks",
             "allFrontiers",
+            "helmholtzFrontiers",
             "use_map_search_times",
             "seed",
             "activation",
@@ -382,7 +384,7 @@ def ecIterator(grammar, tasks,
         if useRecognitionModel and biasOptimal and helmholtzRatio > 0 and \
            all( str(p) != "REAL" for p in grammar.primitives ): # real numbers don't support this
             # the DSL is fixed, so the dreams are also fixed. don't recompute them.
-            if useDSL or 'helmholtzFrontiers' not in locals():
+            if useDSL or helmholtzFrontiers is None:
                 helmholtzFrontiers = backgroundHelmholtzEnumeration(tasks, grammar, enumerationTimeout,
                                                                     evaluationTimeout=evaluationTimeout,
                                                                     special=featureExtractor.special)
@@ -390,6 +392,7 @@ def ecIterator(grammar, tasks,
                 eprint("Reusing dreams from previous iteration.")
         else:
             helmholtzFrontiers = lambda: []
+        result.helmholtzFrontiers = helmholtzFrontiers
 
         reportMemory()
 
