@@ -91,8 +91,8 @@ def multicoreEnumeration(g, tasks, _=None,
 
     def budgetIncrement(lb):
         if True:
-            # return 1.5
-            return 2
+            return 1.5
+            # return 2
         # Very heuristic - not sure what to do here
         if lb < 24.:
             return 1.
