@@ -199,7 +199,7 @@ If you are not running within the singularity container, you will need to instal
 opam update                 # Seriously, do that one
 opam switch 4.06.1+flambda  # caml.inria.fr/pub/docs/manual-ocaml/flambda.html
 eval `opam config env`      # *sight*
-opam install ppx_jane core re2 yojson vg cairo2 camlimages menhir ocaml-protoc zmq
+opam install ppx_jane=v0.11.0 core=v0.11.3 re2=v0.11.0 yojson=1.7.0 vg=0.9.1 cairo2=0.5 camlimages=5.0.1 menhir=20201216 ocaml-protoc=2.0.2 zmq=5.1.3
 ```
 
 Now try to run `make` in the root folder, it should build several ocaml
