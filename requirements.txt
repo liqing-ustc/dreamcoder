@@ -1,3 +1,4 @@
+# python==3.6
 swig
 Box2D-kengz==2.3.3
 cairocffi==1.0.2
@@ -6,15 +7,17 @@ cffi==1.12.3
 chardet==3.0.4
 colorama==0.4.1
 cycler==0.10.0
-dill
+dill==0.2.9
 frozendict==1.2
 graphviz==0.11
 idna==2.8
 joblib
 kiwisolver==1.1.0
 matplotlib
+multiprocess==0.70.7
 nltk
 numpy
+objproxies
 pathos==0.2.3
 Pillow
 pox==0.2.5
