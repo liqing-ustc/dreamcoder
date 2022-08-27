@@ -19,9 +19,9 @@ def _gt(x): return lambda y: x > y
 
 def _positive(x): return x > 0
 
-def _add(x, y): return x + y
+def _add(x): return lambda y: x + y
 
-def _minus0(x, y): return max(0, x - y)
+def _minus0(x): return lambda y: max(0, x - y)
 
 def _fix(argument):
     def inner(body):
@@ -60,6 +60,10 @@ primitiveRecursion2 = Primitive("fix2",
                                       t2),
                                 _fix2)
 
+
+add = Primitive("+", arrow(tint, arrow(tint, tint)), _add)
+minus0 = Primitive("-0", arrow(tint, arrow(tint, tint)), _minus0)
+
 def McCarthyPrimitives():
     "These are < primitives provided by 1959 lisp as introduced by McCarthy"
     primitives = [
@@ -73,8 +77,8 @@ def McCarthyPrimitives():
         primitiveRecursion2,
         # Primitive("gt?", arrow(tint, tint, tbool), _gt),
         # Primitive("positive?", arrow(tint, tbool), _positive),
-        # Primitive("+", arrow(tint, tint, tint), _add),
-        # Primitive("-0", arrow(tint, tint, tint), _minus0),
+        # add,
+        # minus0,
     ]
     return primitives
 
