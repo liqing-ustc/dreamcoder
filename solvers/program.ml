@@ -411,6 +411,16 @@ let primitive_is_prime = primitive "is-prime" (tint @> tboolean)
     (fun x -> List.mem ~equal:(=) [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37; 41; 43; 47; 53; 59; 61; 67; 71; 73; 79; 83; 89; 97; 101; 103; 107; 109; 113; 127; 131; 137; 139; 149; 151; 157; 163; 167; 173; 179; 181; 191; 193; 197; 199] x);;
 
 
+let primitive0 = primitive "scan_0" (tlist tint) [];;
+let primitive0 = primitive "scan_1" (tlist tint) (1 :: []);;
+let primitive0 = primitive "scan_2" (tlist tint) (2 :: []);;
+let primitive0 = primitive "scan_3" (tlist tint) (3 :: []);;
+let primitive0 = primitive "scan_4" (tlist tint) (4 :: []);;
+let primitive0 = primitive "scan_5" (tlist tint) (5 :: []);;
+let primitive0 = primitive "scan_6" (tlist tint) (6 :: []);;
+let primitive_scan_append = primitive "scan_append"  (tlist t0 @> tlist t0 @> tlist t0) (@);;
+let primitive_scan_first = primitive "scan_first" (tlist t0 @> tlist t0) (fun xs -> (List.hd_exn xs) :: []);;
+
 let primitive_cons = primitive "cons" (t0 @> tlist t0 @> tlist t0) (fun x xs -> x :: xs);;
 let primitive_car = primitive "car" (tlist t0 @> t0) (fun xs -> List.hd_exn xs);;
 let primitive_cdr = primitive "cdr" (tlist t0 @> tlist t0) (fun xs -> List.tl_exn xs);;
