@@ -367,9 +367,9 @@ let primitive_constant_strings = [primitive "','" tcharacter ',';
 
 
 
+let primitiven1 = primitive "-1" tint (0-1);;
 let primitive0 = primitive "0" tint 0;;
 let primitive1 = primitive "1" tint 1;;
-let primitiven1 = primitive "-1" tint (0-1);;
 let primitive2 = primitive "2" tint 2;;
 let primitive3 = primitive "3" tint 3;;
 let primitive4 = primitive "4" tint 4;;
@@ -378,7 +378,7 @@ let primitive6 = primitive "6" tint 6;;
 let primitive7 = primitive "7" tint 7;;
 let primitive8 = primitive "8" tint 8;;
 let primitive9 = primitive "9" tint 9;;
-let primitive20 = primitive "ifty" tint 20;;
+let primitive_multiplication10 = primitive "*10" (tint @> tint) (fun x -> x * 10 );;
 let primitive_addition = primitive "+" (tint @> tint @> tint) (fun x y -> x + y);;
 let primitive_increment = primitive "incr" (tint @> tint) (fun x -> 1+x);;
 let primitive_decrement = primitive "decr" (tint @> tint) (fun x -> x-1);;

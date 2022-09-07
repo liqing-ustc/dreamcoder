@@ -4,23 +4,28 @@ except ModuleNotFoundError:
     import bin.binutil  # alt import if called as module
 
 from dreamcoder.dreamcoder import commandlineArguments, ecIterator
+from dreamcoder.domains.list.listPrimitives import _reverse, _car, _cdr, _single, _append, _cons
+from dreamcoder.domains.hint.hintPrimitives import _incr, _decr0
 from dreamcoder.grammar import Grammar
 from dreamcoder.program import Primitive
 from dreamcoder.task import Task
-from dreamcoder.type import arrow, tint, tlist, t0
+from dreamcoder.type import arrow, tint, tlist, t0, t1, t2
 from dreamcoder.utilities import numberOfCPUs
 
-def _first(x): return [x[0]]
-
-def _append(x): return lambda y: x + y
+def _multiply10(x): return x * 10
 
 primitives = [
-    Primitive("scan_first", arrow(tlist(t0), tlist(t0)), _first),
-    Primitive("scan_append", arrow(tlist(t0), tlist(t0), tlist(t0)), _append),
+    Primitive("reverse", arrow(tlist(t0), tlist(t0)), _reverse),
+    Primitive("empty", tlist(t0), []),
+    Primitive("car", arrow(tlist(t0), t0), _car),
+    Primitive("cdr", arrow(tlist(t0), tlist(t0)), _cdr),
+    Primitive("singleton", arrow(t0, tlist(t0)), _single),
+    Primitive("++", arrow(tlist(t0), tlist(t0), tlist(t0)), _append),
+    Primitive("cons", arrow(t0, tlist(t0), tlist(t0)), _cons),
+    Primitive("0", tint, 0),
+    Primitive("incr", arrow(tint, tint), _incr),
+    Primitive("*10", arrow(tint, tint), _multiply10),
 ]
-
-for i in range(7):
-	primitives.append(Primitive(f'scan_{i}', arrow(tlist(tint)), [i] if i > 0 else []))
 
 if __name__ == "__main__":
 
