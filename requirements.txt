@@ -1,6 +1,6 @@
 # python==3.6
 swig
-# Box2D-kengz==2.3.3
+Box2D-kengz==2.3.3
 cairocffi==1.0.2
 certifi==2019.3.9
 cffi==1.12.3
